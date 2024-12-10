@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Products } from "./products.interface";
+import subcategoriesSchema from "../subcategories/subcategories.schema";
 
 
 const productsSchema = new mongoose.Schema<Products>({
@@ -22,7 +23,7 @@ const productsSchema = new mongoose.Schema<Products>({
 });
 
 productsSchema.pre<Products>(/^find/, function(next){
-    this.populate({path: 'subcategories',select:'name image'})
+    this.populate({path:'subcategory',select:'name image'})
     next();
 })
 

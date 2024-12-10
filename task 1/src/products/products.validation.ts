@@ -95,10 +95,10 @@ class ProductsValidation {
     ,validatorMiddleware]
     getOne = [
         param("id").isMongoId().withMessage((val,{req})=> req.__('invalid_id')),
-        validatorMiddleware]
+        validatorMiddleware];
     deleteOne = [
         param("id").isMongoId().withMessage((val,{req})=> req.__('invalid_id')),
-        validatorMiddleware]
+        validatorMiddleware];
     
 
 }

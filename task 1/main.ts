@@ -4,6 +4,7 @@ import dbConnection from "./src/config/database";
 import categoriesRouter from "./src/categories/categories.router";
 import subcategoriesRouter from "./src/subcategories/subcategories.router";
 import dotenv from "dotenv";
+import hpp from "hpp";
 import i18n from "i18n";
 import mountRoutes from "./src";
 import path from "path";
@@ -14,7 +15,7 @@ let server: Server;
 //****************** */
 dotenv.config()
 //******************* */
-
+app.use(hpp()) 
 i18n.configure({
     locales: ['ar','en'],
     directory: path.join(__dirname, 'locales'),
