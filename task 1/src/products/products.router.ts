@@ -16,13 +16,13 @@ const productsRouter:Router = Router();
 
 productsRouter.route('/')
 .get(productsService.getAll)
-.post(productsService.uploadImage,productsService.saveImage,productsValidation.createOne,productsService.createOne);
+.post(productsService.uploadImages,productsService.saveImage,productsValidation.createOne,productsService.createOne);
 
 
 
 productsRouter.route('/:id')
 .get(productsValidation.getOne,productsService.getOne)
-.put(productsService.uploadImage,productsService.saveImage,productsValidation.updateOne,productsService.updateOne)
+.put(productsService.uploadImages,productsService.saveImage,productsValidation.updateOne,productsService.updateOne)
 .delete(productsValidation.deleteOne,productsService.deleteOne);
 
 export default productsRouter;

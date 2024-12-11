@@ -23,8 +23,10 @@ interface Fields {
 
 const uploadOptions= (fileTypes: string[]) => {
     const multerStorage: multer.StorageEngine = multer.memoryStorage();
-    const multerFilter =function (req:Request, file: Express.Multer.File, cb:multer.FileFilterCallback) :void {
-      const isValidType: boolean = fileTypes.some((type): boolean => file.mimetype.startsWith(type));
+    const multerFilter =function (req:Request, file: Express.Multer.File, 
+      cb:multer.FileFilterCallback) :void {
+      const isValidType: boolean = fileTypes.some((type): boolean => 
+        file.mimetype.startsWith(type));
       if (isValidType) {
         cb(null, true);
       } else { 
@@ -34,7 +36,9 @@ const uploadOptions= (fileTypes: string[]) => {
     return multer({storage: multerStorage, fileFilter: multerFilter});
   };
 
-  export const uploadSingleFile = (fileTypes: string[], fieldName: string) => uploadOptions(fileTypes).single(fieldName);
+  export const uploadSingleFile = (fileTypes: string[], fieldName: string) => 
+    uploadOptions(fileTypes).single(fieldName);
 
 
-  export const uploadMultiFiles = (fileTypes: string[], fields: Fields[]) => uploadOptions(fileTypes).fields(fields);
+  export const uploadMultiFiles = (fileTypes: string[], fields: Fields[]) => 
+    uploadOptions(fileTypes).fields(fields);

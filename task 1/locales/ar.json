@@ -5,6 +5,7 @@
     "validation_field": "الحقل مطلوب",
     "validation_value": "قيمة خاطئة",
     "validation_email_check": "البريد الإلكتروني موجود بالفعل",
+    "validation_u-name_check":"اسم المستخدم موجود بالفعل",
     "validation_length_short": "الطول بتراوح بين 10, 50 حرف",
     "validation_length_medium": "الطول بتراوح بين 10, 150 حرف",
     "validation_length_long": "الطول بتراوح بين 10, 500 حرف",

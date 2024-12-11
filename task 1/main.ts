@@ -15,6 +15,9 @@ let server: Server;
 //****************** */
 dotenv.config()
 //******************* */
+//******************* */
+app.use(express.static('uploads'));///* OR */app.use(express.static(path.join(__dirname, 'uploads')));    
+//******************* */
 app.use(hpp()) 
 i18n.configure({
     locales: ['ar','en'],

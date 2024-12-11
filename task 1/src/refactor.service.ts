@@ -5,6 +5,7 @@ import ApiErrors from "./utils/apiError";
 import { promises } from "dns";
 import { features } from "process";
 import Features from "./utils/features";
+import sanitization from "./utils/sanitization";
 
 
 
@@ -21,8 +22,9 @@ class RefactorService {
         const documentsCount = await model.find(filterData).countDocuments();
         const features = new Features(model.find(filterData),req.query).sort().limitFields().search(modelName!).paginations(documentsCount);
         const {mongooseQuery,paginationResult} = features;
-        const documents:modelType[] =await mongooseQuery;
-        res.status(200).json({ length:documents.length,pagination:paginationResult,data: documents});
+        let documents: any[] = await mongooseQuery;/*documents ====> ARRAY , ==> documents.map */
+        if (modelName === 'users') documents = documents.map(document => sanitization.User(document));
+        res.status(200).json({pagination: paginationResult, length: documents.length, data: documents});
     });
     
     createOne = <modelType>(model:mongoose.Model<any>)=>
@@ -31,11 +33,12 @@ class RefactorService {
         res.status(201).json({ data : documents})
     });
 
-    getOne = <modelType>(model:mongoose.Model<any>)=>
+    getOne = <modelType>(model:mongoose.Model<any>, modelName?: string)=>
     asyncHandler(async(req: Request, res: Response, next: NextFunction):Promise<void> =>{
-        const documents:modelType | null = await model.findById(req.params.id);
-        if (!documents) return next(new ApiErrors(`${req.__('not_found')}`,404));
-        res.status(200).json({ data : documents})
+        let documents:any = await model.findById(req.params.id);
+        if (!document) return next(new ApiErrors(`${req.__('not_found')}`, 404));
+        if (modelName === 'users') documents = sanitization.User(document)
+        res.status(200).json({data: documents});
     });
 
     updateOne = <modelType>(model:mongoose.Model<any>)=>

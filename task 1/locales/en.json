@@ -6,6 +6,7 @@
     "validation_field": "Field Required",
     "validation_value": "Invalid Value",
     "validation_email_check": "Email is Already Exist",
+    "validation_u-name_check":"User-Name is Already Exist",
     "validation_length_short": "length is between 10, 50",
     "validation_length_medium": "length is between 10, 150",
     "validation_length_long": "length is between 10, 500",
