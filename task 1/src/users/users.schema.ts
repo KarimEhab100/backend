@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import {Users} from "./users.interface";
 
@@ -11,11 +11,18 @@ const usersSchema = new mongoose.Schema<Users>({
     googleId: String,
     hasPassword: {type: Boolean, default: true},
     image: {type: String, default: 'user-default.jpg'},
-    role: {type: String, enum:['admin', 'employee', 'user'], default: 'user'},
+    role: {type: String, enum:['admin', 'employee', 'user']},
     passwordChangedAt: Date,
     passwordResetCode: String,
     passwordResetCodeExpires: Date,
-    passwordResetCodeVerify: Boolean
+    passwordResetCodeVerify: Boolean,
+    wishList: [{type: mongoose.Schema.Types.ObjectId,ref:'products'}],
+    address: [{
+        address: String,
+        city: String,
+        state: String,
+        zip: String
+    }]
 }, {timestamps: true});
 
 const imagesUrl = (document: Users) => {

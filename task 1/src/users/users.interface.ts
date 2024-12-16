@@ -1,4 +1,4 @@
-import {Document} from "mongoose";
+import {Document,Schema} from "mongoose";
 
 export interface Users extends Document {
     readonly username: string;
@@ -7,13 +7,22 @@ export interface Users extends Document {
     password: string;
     readonly role: Role;
     readonly active: boolean;
-    readonly googleId: string;
+    googleId: string;
     hasPassword: boolean;
     passwordChangedAt: Date | number;
     passwordResetCode: string | undefined;
     passwordResetCodeExpires: Date | number | undefined;
     passwordResetCodeVerify: boolean | undefined;
     image: string;
+    wishList:Schema.Types.ObjectId[];
+    address:Address[];
 }
 
 type Role = "admin" | "employee" | "user";
+
+type Address = {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+}

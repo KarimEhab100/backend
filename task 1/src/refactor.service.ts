@@ -2,8 +2,6 @@ import { Request, Response , NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import mongoose from "mongoose";
 import ApiErrors from "./utils/apiError";
-import { promises } from "dns";
-import { features } from "process";
 import Features from "./utils/features";
 import sanitization from "./utils/sanitization";
 
@@ -35,10 +33,10 @@ class RefactorService {
 
     getOne = <modelType>(model:mongoose.Model<any>, modelName?: string)=>
     asyncHandler(async(req: Request, res: Response, next: NextFunction):Promise<void> =>{
-        let documents:any = await model.findById(req.params.id);
+        let document:any = await model.findById(req.params.id);
         if (!document) return next(new ApiErrors(`${req.__('not_found')}`, 404));
-        if (modelName === 'users') documents = sanitization.User(document)
-        res.status(200).json({data: documents});
+        if (modelName === 'users') document= sanitization.User(document)
+        res.status(200).json({data: document});
     });
 
     updateOne = <modelType>(model:mongoose.Model<any>)=>

@@ -8,6 +8,8 @@ import hpp from "hpp";
 import i18n from "i18n";
 import mountRoutes from "./src";
 import path from "path";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -15,6 +17,13 @@ let server: Server;
 //****************** */
 dotenv.config()
 //******************* */
+app.use(cors({
+    origin: ['http://localhost:4200'],
+    allowedHeaders: ['content-type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true
+}));
+app.use(cookieParser());
 //******************* */
 app.use(express.static('uploads'));///* OR */app.use(express.static(path.join(__dirname, 'uploads')));    
 //******************* */

@@ -53,6 +53,7 @@ class UsersValidation {
         .isLength({ min: 6 , max: 20 }).withMessage((val,{req})=> req.__('validation_length_password'))
         .custom((val,{req})=>{
         if (val !== req.body.password) throw new Error(`${req.__('validation_password_match')}`)
+        return true;
         })
             ,validatorMiddleware]
 

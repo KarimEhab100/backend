@@ -19,7 +19,7 @@ usersRouter.route('/:id')
 .delete(usersValidation.deleteOne,usersService.deleteOne);
 
 
-usersRouter.put('/:id/change-passowrd',usersValidation.changePassword,usersService.changePassword)
+usersRouter.put('/:id/change-password',usersValidation.changePassword,usersService.changePassword)
 
 
 export default usersRouter;
