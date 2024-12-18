@@ -1,10 +1,10 @@
 import { Router } from "express";
-import categoriesService from "./categories.service";
+import categoriesService from "./cart.service";
 import subcategoriesRouter from "../subcategories/subcategories.router";
 import { body } from "express-validator";
 import validatorMiddleware from "../middlewares/validator.middleware";
-import categoriesSchema from "./categories.schema";
-import categoriesValidation from "./categories.validation";
+import categoriesSchema from "./cart.schema";
+import categoriesValidation from "./cart.validation";
 import authService from "../auth/auth.service";
 
 

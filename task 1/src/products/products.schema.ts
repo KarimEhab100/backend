@@ -18,7 +18,8 @@ const productsSchema = new mongoose.Schema<Products>({
     cover: {type:String},
     images:[String]
 },
-{
+{   toJSON:{virtuals:true},
+    toObject:{virtuals:true},
     timestamps: true
 });
 
@@ -32,7 +33,6 @@ const imagesUrl = (document: Products)=>{
             `${process.env.BASE_URL}/images/products/${image}`);
 }
 }
-
 productsSchema.post('init',imagesUrl).post('save',imagesUrl)
 
 productsSchema.pre<Products>(/^find/, function(next){
@@ -40,5 +40,10 @@ productsSchema.pre<Products>(/^find/, function(next){
     next();
 })
 
+productsSchema.virtual('reviews'/**Field Name */,
+    {   localField:'_id',
+        foreignField:'product',
+        ref: 'reviews'/**reviewsSchema */
+    })
 
 export default mongoose.model<Products>("products", productsSchema);

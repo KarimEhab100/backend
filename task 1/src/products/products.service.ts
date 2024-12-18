@@ -8,7 +8,7 @@ import { uploadMultiFiles, uploadSingleFile } from "../middlewares/uploadFiles.m
 class ProductsService {
     getAll = refactorService.getAll<Products>(ProductsSchema,'products')
     createOne = refactorService.createOne<Products>(ProductsSchema)
-    getOne = refactorService.getOne<Products>(ProductsSchema)
+    getOne = refactorService.getOne<Products>(ProductsSchema,'products','reviews')
     updateOne = refactorService.updateOne<Products>(ProductsSchema)
     deleteOne = refactorService.deleteOne<Products>(ProductsSchema)
 

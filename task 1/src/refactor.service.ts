@@ -31,9 +31,11 @@ class RefactorService {
         res.status(201).json({ data : documents})
     });
 
-    getOne = <modelType>(model:mongoose.Model<any>, modelName?: string)=>
+    getOne = <modelType>(model:mongoose.Model<any>, modelName?: string,populationOption?:string)=>
     asyncHandler(async(req: Request, res: Response, next: NextFunction):Promise<void> =>{
-        let document:any = await model.findById(req.params.id);
+        let query:any = model.findById(req.params.id);
+        if(populationOption)query = query.populate(populationOption)
+        let document:any = await query;
         if (!document) return next(new ApiErrors(`${req.__('not_found')}`, 404));
         if (modelName === 'users') document= sanitization.User(document)
         res.status(200).json({data: document});
@@ -41,7 +43,7 @@ class RefactorService {
 
     updateOne = <modelType>(model:mongoose.Model<any>)=>
     asyncHandler(async(req: Request, res: Response, next: NextFunction):Promise<void> =>{
-        const documents:modelType | null = await model.findByIdAndUpdate(req.params.id,req.body,{new:true});
+        const documents:modelType | null = await model.findOneAndUpdate({_id:req.params.id},req.body,{new:true});
         if (!documents) return next(new ApiErrors(`${req.__('not_found')}`,404));
         res.status(200).json({ data : documents})
     });
