@@ -16,11 +16,11 @@ class ReviewsValidation {
         body('product')
         .notEmpty().withMessage((val,{req})=> req.__('validation_field'))
         .isMongoId().withMessage((val,{req})=> req.__('invalid_id'))
-        // .custom(async(val,{req})=>{
-        //     const review = await reviewsSchema.findOne({user:req.user._id,product:val})
-        //     if(review) throw new Error(`you can't review a product twice`)
-        //     return true;
-        // })
+        .custom(async(val,{req})=>{
+            const review = await reviewsSchema.findOne({user:req.user._id,product:val})
+            if(review) throw new Error(`you can't review a product twice`)
+            return true;
+        })
     ,validatorMiddleware]
     updateOne = [
         param("id")

@@ -9,6 +9,7 @@ const cartsSchema = new mongoose.Schema<Carts>({
         quantity:{type:Number , default:1},
         price:{type: Number}
     }],
+    taxPrice:{type:Number},
     totalPrice:{type: Number},
     totalPriceAfterDiscount:{type: Number},
     user:{type:mongoose.Schema.Types.ObjectId,ref: "users"}

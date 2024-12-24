@@ -1,24 +1,23 @@
 import { Router } from "express";
-import categoriesService from "./cart.service";
-import subcategoriesRouter from "../subcategories/subcategories.router";
-import { body } from "express-validator";
-import validatorMiddleware from "../middlewares/validator.middleware";
-import categoriesSchema from "./cart.schema";
-import categoriesValidation from "./cart.validation";
+import cartsService from "./cart.service";
+import cartsValidation from "./cart.validation";
 import authService from "../auth/auth.service";
 
 
-const categoriesRouter = Router();
+const cartsRouter = Router();
 
-categoriesRouter.use('/:categoryId/subcategories',subcategoriesRouter)
+cartsRouter.use(authService.protectedRoutes,authService.checkActive,authService.allowedTo('user'))
 
-categoriesRouter.route('/')
-.get(categoriesService.getAll)
-.post(authService.protectedRoutes,authService.checkActive,authService.allowedTo('admin','employee'),categoriesValidation.createOne,categoriesService.createOne);
+cartsRouter.route('/')
+.get(cartsService.getCart)
+.post(cartsValidation.addToCart,cartsService.addToCart)
+.delete(cartsService.deleteCart);
 
-categoriesRouter.route('/:id')
-.get(categoriesValidation.getOne,categoriesService.getOne)
-.put(authService.protectedRoutes,authService.checkActive,authService.allowedTo('admin','employee'),categoriesValidation.createOne,categoriesService.updateOne)
-.delete(authService.protectedRoutes,authService.checkActive,authService.allowedTo('admin','employee'),categoriesValidation.deleteOne,categoriesService.deleteOne);
+cartsRouter.route('/:itemId')
+.put(cartsValidation.updateQuqntity,cartsService.updateQuantity)
+.delete(cartsValidation.removeFromCart,cartsService.removeFromCart)
 
-export default categoriesRouter;
+cartsRouter.route('/apply-copon')
+.put(cartsService.upplyCopon)
+
+export default cartsRouter;

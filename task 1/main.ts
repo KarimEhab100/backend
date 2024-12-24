@@ -10,20 +10,35 @@ import mountRoutes from "./src";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import compression from "compression";
+import expressMongoSanitize from "express-mongo-sanitize";
+import helmet from "helmet";
+
+
 
 
 const app = express();
+app.use(express.json({limit: '10kb'}));
 let server: Server;
 //****************** */
 dotenv.config()
 //******************* */
 app.use(cors({
     origin: ['http://localhost:4200'],
-    allowedHeaders: ['content-type', 'Authorization'],
+    allowedHeaders: ['content-type', 'Authorization','X-CSRF-Token'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
+/************************** */
+app.use(expressMongoSanitize())
+/************************** */
+app.use(compression());
+/************************** */
+app.use(helmet({crossOriginResourcePolicy:{policy:'same-site'}}))
+/************************** */
+
 app.use(cookieParser());
+
 //******************* */
 app.use(express.static('uploads'));///* OR */app.use(express.static(path.join(__dirname, 'uploads')));    
 //******************* */
@@ -35,7 +50,6 @@ i18n.configure({
     queryParameter:'lang'
 })
 app.use(i18n.init);
-app.use(express.json({limit: '10kb'}));
 
 //********************/
 dbConnection();

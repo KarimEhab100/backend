@@ -26,5 +26,6 @@
 	"check_password_changed": "Your password has been updated since you logged in last time. Please log in again.",
 	"check_active": "Your account is deactivated",
 	"allowed_to": "Privilege denied! You cannot perform this action",
-	"not found": "not found"
+	"not found": "not found",
+	"invalid_number": "invalid_number"
 }

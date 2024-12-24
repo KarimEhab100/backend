@@ -12,6 +12,9 @@ import wishListRouter from './wishlist/wishlist.router';
 import addressRouter from './address/address.router';
 import reviewsRouter from './reviews/reviews.router';
 import coponsRouter from './copons/copons.router';
+import cartsRouter from './cart/cart.router';
+import csurf from 'csurf';
+import ordersRouter from './orders/orders.router';
 
 declare module "express"{
     interface Request{
@@ -21,6 +24,20 @@ declare module "express"{
     }
 }
 const mountRoutes = (app:express.Application) =>{
+    app.use('/auth/google',googleRoute);
+    // app.use(
+    //     csurf({
+    //         cookie: {
+    //             httpOnly: true,
+    //             secure: true,
+    //             sameSite: 'strict',
+    //         },
+    //     }),
+    // );
+    // app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    //     res.cookie('cookies', req.csrfToken());
+    //     next();
+    // });
     app.use('/api/v1/categories',categoriesRouter);
     app.use('/api/v1/subcategories',subcategoriesRouter);
     app.use('/api/v1/users',usersRouter);
@@ -31,7 +48,8 @@ const mountRoutes = (app:express.Application) =>{
     app.use('/api/v1/reviews',reviewsRouter);
     app.use('/api/v1/products',productsRouter);
     app.use('/api/v1/copons',coponsRouter);
-    app.use('/auth/google',googleRoute);
+    app.use('/api/v1/cart',cartsRouter);
+    app.use('/api/v1/orders',ordersRouter);
     app.all('*',(req:express.Request,res:express.Response,next:express.NextFunction)=>{
         next(new ApiErrors(`Route ${req.originalUrl} is not Found`, 400));
     });
